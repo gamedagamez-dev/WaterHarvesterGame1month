@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://b1ssboprd5lt1"]
+
+[ext_resource type="Script" uid="uid://d3g6u874g6fr8" path="res://Scenes/Mech/ControlPanel.cs" id="1_domyi"]
+[ext_resource type="Script" uid="uid://d0likh3fde5fc" path="res://Scenes/Mech/Lever.cs" id="2_aqhbx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_utc5s"]
+size = Vector3(0.3, 0.1, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xubsh"]
+size = Vector3(0.3, 0.1, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wh7so"]
+size = Vector3(0.1, 0.75, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xubsh"]
+size = Vector3(0.1, 0.5810547, 1)
+
+[node name="ControlPanel" type="StaticBody3D" unique_id=870074310]
+script = ExtResource("1_domyi")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="." unique_id=743544702]
+transform = Transform3D(0.6910519, 0.72280514, 0, -0.72280514, 0.6910519, 0, 0, 0, 1, -0.067239285, 0.35655904, 0)
+node_a = NodePath("..")
+node_b = NodePath("RigidBody3D")
+angular_limit/enable = true
+angular_limit/upper = 0.5235988
+angular_limit/lower = -0.5235988
+angular_limit/relaxation = 0.1
+motor/enable = true
+motor/max_impulse = 0.2
+
+[node name="RigidBody3D" type="RigidBody3D" parent="HingeJoint3D" unique_id=1807180721]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20336866, 0, 0)
+collision_mask = 2
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+script = ExtResource("2_aqhbx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HingeJoint3D/RigidBody3D" unique_id=844021698]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5665184, 0, 0)
+shape = SubResource("BoxShape3D_utc5s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HingeJoint3D/RigidBody3D" unique_id=821412625]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5665184, 0, 0)
+mesh = SubResource("BoxMesh_xubsh")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=285906713]
+mesh = SubResource("BoxMesh_wh7so")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=484335676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.084472656, 0)
+shape = SubResource("BoxShape3D_xubsh")

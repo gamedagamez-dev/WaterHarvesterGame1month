@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dnmblaie548bx"]
+
+[ext_resource type="Script" uid="uid://bljfmmt56ys0s" path="res://Scenes/Mech/PlayerMech.cs" id="1_hhlfs"]
+[ext_resource type="PackedScene" uid="uid://b1ssboprd5lt1" path="res://Scenes/Mech/controlPanel.tscn" id="2_n8eow"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_utc5s"]
+size = Vector3(5, 0.1, 5)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_utc5s"]
+height = 1.3311768
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2r8si"]
+size = Vector3(5, 0.1, 5)
+
+[node name="PlayerMech" type="CharacterBody3D" unique_id=850210959]
+script = ExtResource("1_hhlfs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1160796262]
+mesh = SubResource("BoxMesh_utc5s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=732248086]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0668335, 0)
+shape = SubResource("CapsuleShape3D_utc5s")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=457490651]
+shape = SubResource("BoxShape3D_2r8si")
+
+[node name="ControlPanel" parent="." unique_id=870074310 instance=ExtResource("2_n8eow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5049398, 0.375, 0)

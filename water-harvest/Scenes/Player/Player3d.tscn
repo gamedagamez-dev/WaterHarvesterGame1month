@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c24bivjossa83"]
+
+[ext_resource type="Script" uid="uid://clv8rtw2s2yp2" path="res://Scenes/Player/Player3d.cs" id="1_w23hj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_utc5s"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_utc5s"]
+
+[node name="Player3d" type="CharacterBody3D" unique_id=885577574 groups=["Player"]]
+script = ExtResource("1_w23hj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=762857859]
+shape = SubResource("CapsuleShape3D_utc5s")
+
+[node name="CamPivot" type="Marker3D" parent="." unique_id=1685866287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65072954, -0.31863624)
+
+[node name="NeckPivot" type="Marker3D" parent="CamPivot" unique_id=914435264]
+
+[node name="Camera3D" type="Camera3D" parent="CamPivot/NeckPivot" unique_id=1638661509]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.23788631)
+
+[node name="RayCast3D" type="RayCast3D" parent="CamPivot/NeckPivot/Camera3D" unique_id=933992402]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.12620223)
+target_position = Vector3(0, 0, -2.5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=294418769]
+mesh = SubResource("CapsuleMesh_utc5s")

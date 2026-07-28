@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dkkr3m6okk7mh"]
+
+[ext_resource type="Texture2D" uid="uid://dn0jkjeyv267k" path="res://Assets/Textures/NumPlaceholder.png" id="1_wh7so"]
+[ext_resource type="PackedScene" uid="uid://c24bivjossa83" path="res://Scenes/Player/Player3d.tscn" id="2_kuddr"]
+[ext_resource type="PackedScene" uid="uid://dnmblaie548bx" path="res://Scenes/Mech/playerMech.tscn" id="3_i6431"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5cbj"]
+albedo_texture = ExtResource("1_wh7so")
+uv1_offset = Vector3(0, 0.5, 0)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xy7i8"]
+load_path = "res://.godot/imported/NumPlaceholder.png-4d69362508f3c728a51a706ffca1e088.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mhusm"]
+albedo_texture = SubResource("CompressedTexture2D_xy7i8")
+uv1_offset = Vector3(0.5, 0.5, 0)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_omr8w"]
+sky_top_color = Color(0.4, 0.49019608, 0.5882353, 1)
+
+[sub_resource type="Sky" id="Sky_xubsh"]
+sky_material = SubResource("ProceduralSkyMaterial_omr8w")
+
+[sub_resource type="Environment" id="Environment_utc5s"]
+background_mode = 2
+sky = SubResource("Sky_xubsh")
+
+[node name="Node3D" type="Node3D" unique_id=687847688]
+
+[node name="Terrain" type="Node" parent="." unique_id=329001750]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Terrain" unique_id=49502900]
+material_override = SubResource("StandardMaterial3D_b5cbj")
+use_collision = true
+size = Vector3(100, 1, 100)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Terrain" unique_id=24398649]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, -0.9863281)
+material_override = SubResource("StandardMaterial3D_mhusm")
+use_collision = true
+size = Vector3(1, 1, 4)
+
+[node name="Player3d" parent="." unique_id=885577574 instance=ExtResource("2_kuddr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.913684, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1745283700]
+environment = SubResource("Environment_utc5s")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1820713565]
+transform = Transform3D(0.97359645, -0.1476893, 0.17406285, -0.22827615, -0.629894, 0.74237704, 0, -0.76251, -0.6469765, 0, 1.6989199, 0)
+sky_mode = 1
+
+[node name="PlayerMech" parent="." unique_id=850210959 instance=ExtResource("3_i6431")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20612717, 3.488247, -6.800097)
