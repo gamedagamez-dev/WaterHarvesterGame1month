@@ -55,4 +55,4 @@ transform = Transform3D(0.97359645, -0.1476893, 0.17406285, -0.22827615, -0.6298
 sky_mode = 1
 
 [node name="PlayerMech" parent="." unique_id=850210959 instance=ExtResource("3_i6431")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20612717, 3.488247, -6.800097)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20612717, 3.488247, 8.334448)

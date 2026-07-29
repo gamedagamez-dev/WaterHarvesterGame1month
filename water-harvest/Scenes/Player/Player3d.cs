@@ -10,7 +10,7 @@ public partial class Player3d : CharacterBody3D
     public float jumpBufferTimer = 0;
     [Export] public float Speed = 4.0f;
 	[Export] public float RunSpeed = 3.0f;
-    [Export] private  float JumpVelocity = 4.5f;
+    [Export] private  float JumpVelocity = 5f;
 
     //---Constants---
     private const float jumpBufferTime = 0.2f;
@@ -28,6 +28,9 @@ public partial class Player3d : CharacterBody3D
     private IInteractable _focusedInteractable; // what the player is currently looking at
     private IInteractable _heldInteractable;    // what the player is currently holding/dragging
 
+    //---Moving platform state---
+    private PlayerMech _standingOnMech; // the mech the player is currently standing on, if any
+
     public override void _Ready()
     {
         _twistPivot = GetNode<Marker3D>("CamPivot");
@@ -38,6 +41,8 @@ public partial class Player3d : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
+        FollowMechRotation();
+
         Vector3 velocity = Velocity;
 		// Add the gravity.
 		if (!IsOnFloor())
@@ -78,6 +83,51 @@ public partial class Player3d : CharacterBody3D
 		MoveAndSlide();
 
         UpdateFocusedInteractable();
+    }
+
+    // Godot's built-in moving-platform support (used automatically by MoveAndSlide) carries a
+    // platform's linear velocity to whatever is standing on it, but not its rotation. This
+    // detects when the player is standing on a PlayerMech and manually applies the same yaw
+    // rotation to the player - both its facing direction and its position around the mech's
+    // pivot - so it turns together with the mech instead of staying put while the mech spins
+    // underneath it.
+    private void FollowMechRotation()
+    {
+        _standingOnMech = null;
+
+        if (IsOnFloor())
+        {
+            for (int i = 0; i < GetSlideCollisionCount(); i++)
+            {
+                KinematicCollision3D collision = GetSlideCollision(i);
+                if (collision.GetNormal().Dot(Vector3.Up) < 0.5f)
+                {
+                    continue; // not a floor-ish contact, e.g. a wall
+                }
+                if (collision.GetCollider() is PlayerMech mech)
+                {
+                    _standingOnMech = mech;
+                    break;
+                }
+            }
+        }
+
+        if (_standingOnMech == null || Mathf.IsZeroApprox(_standingOnMech.LastYawDelta))
+        {
+            return;
+        }
+
+        float yaw = _standingOnMech.LastYawDelta;
+        Vector3 pivot = _standingOnMech.GlobalTransform.Origin;
+
+        Vector3 offset = GlobalTransform.Origin - pivot;
+        offset = offset.Rotated(Vector3.Up, yaw);
+
+        Transform3D transform = GlobalTransform;
+        transform.Origin = pivot + offset;
+        GlobalTransform = transform;
+
+        RotateY(yaw);
     }
 
     private void UpdateFocusedInteractable()
