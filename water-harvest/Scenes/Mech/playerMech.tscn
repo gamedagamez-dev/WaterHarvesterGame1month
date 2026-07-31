@@ -13,6 +13,8 @@ height = 1.3311768
 size = Vector3(5, 0.1, 5)
 
 [node name="PlayerMech" type="CharacterBody3D" unique_id=850210959]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_hhlfs")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1160796262]
@@ -20,6 +22,10 @@ mesh = SubResource("BoxMesh_utc5s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=732248086]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0668335, 0)
+shape = SubResource("CapsuleShape3D_utc5s")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." unique_id=816104163]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0)
 shape = SubResource("CapsuleShape3D_utc5s")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=457490651]
